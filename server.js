@@ -40,26 +40,72 @@ app.get('/api/todos', function (req, res) {
 
 //2. POST to todos...JSON response
 app.post('/api/todos', function (req, res)  {
+  //Create nw to do with form data
   var newTodo = new Todo(req.body);
+
+  //save new todo in db
   newTodo.save(function (err, savedToDo)  {
     if (err) {
       res.status(500).json({ error: err.message });    
     } else  {
-      res.json(savedToDo);
+      res.json(savedTodo);
     }
   });
 });
+
 //3. GET single todo by id
 app.get('/api/todos/:id', function (req, res) {
+  //get todo id from url params ('req.params')
+  var todoId = req.params.id;
 
+  //find todo in db by id
+  Todo.findOne({ _id: todoId}, function (err, foundToDo)  {
+    if (err)  {
+      res.status(500).json({ error: err.message });
+    } else  {
+      res.json(foundTodo);
+    }
+  });
 });
+
 //4. PUT update to single todos, get by i.d.
 app.put('/api/todos/:id', function (req, res) {
+  //get todo id from url params ('req.params')
+  var todoId = req.params.id;
+  //find todo in db by id
+  Todo.findOne({ _id: todoId }, function (err, foundTodo)  {
+    if (err)  {
+      res.status(500);
+    } else  {
+      //update the todos attributes
+      foundTodo.title = req.body.title;
+      foundToDo.description = req.body.description;
+      foundTodo.done = req.body.done;
 
+      //save updated todo in db
+      foundTodo/save(function (err, savedTodo){
+        if (err)  {
+          res.status(500).json({ error: err.message });
+        }  else  {
+          res.json(savedTodo);
+        }
+      });
+    }
+  });
 });
+
 //5. DELETE a todo by, get by i.d.
 app.delete('/api/todos/:id', function (req, res)  {
-
+  //get todo id from url params ('req.params')
+  var todoId = req.params.id;
+  //find todo in db by id and delete it
+  Todo.findOneAndRemove({ _id: todoId }, function (err, deletedTodo){
+    if (err)  {
+      res.status(500);
+    }  else  {
+      res.json(deletedTodo);
+    }
+  });
 });
 
 /*
