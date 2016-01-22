@@ -22,6 +22,8 @@ app.set('view engine', 'hbs');
 // connect to mongodb
 mongoose.connect('mongodb://localhost/mean_sample');
 
+// require Todo model
+var Todo = require('./models/todo');
 
 //II.CRUD routes for resouce
 
@@ -29,7 +31,7 @@ mongoose.connect('mongodb://localhost/mean_sample');
 
 //1. GET all...JSON response
 app.get('/api/todos', function (req, res) {
-  Todo.find(function (err, allTodos){
+  Todo.find(function (err, allTodos)  {
     if (err)  {
       res.status(500).json({ error: err.message });
     } else  {
@@ -44,7 +46,7 @@ app.post('/api/todos', function (req, res)  {
   var newTodo = new Todo(req.body);
 
   //save new todo in db
-  newTodo.save(function (err, savedToDo)  {
+  newTodo.save(function (err, savedTodo)  {
     if (err) {
       res.status(500).json({ error: err.message });    
     } else  {

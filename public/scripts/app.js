@@ -1,37 +1,41 @@
 //I. Configure Angular app(sampleApp = index.hbs)
-var app = angular.module('sampleApp', ['ngRoute']); 
+var app = angular.module('sampleApp', ['ngRoute', 'ngResource']); 
 
 app.config(['$routeProvider', '$locationProvider',
   function ($routeProvider, $locationProvider)  {
     $routeProvider
       .when('/',  {
-        templateUrl: 'home.html',
-        controller: 'HomeCtrl'
+        templateUrl: '/templates/home.html',
+        controller: 'TodosIndexCtrl'
+      })
+      .otherwise({
+        redirectTo: '/'
       });
 
     $locationProvider.html5Mode({
-      enbabled: true,
-      requireBase: false
+      enbabled: true
     });    
   }
 ]);
 
+
+// $resource function exposes all five RESTful methods/routes
+  // { 'get'   : { method: 'GET'                },
+  //   'save'  : { method: 'POST'               },
+  //   'query' : { method: 'GET', isArray: true },
+  //   'remove': { method: 'DELETE'             },
+  //   'delete': { method: 'DELETE'             } };
+
 //Resources for todo.
-app.factory('Todo', ['$resouce', function ($resouce){
+app.factory('Todo', ['$resource', function ($resource){
   return $resource('/api/todos/:id', { id: '@_id'}, 
   { 
     'update': {method: 'Put'}
     });
-  // $resource function exposes all five RESTful methods/routes
-    // { 'get'   : { method: 'GET'                },
-    //   'save'  : { method: 'POST'               },
-    //   'query' : { method: 'GET', isArray: true },
-    //   'remove': { method: 'DELETE'             },
-    //   'delete': { method: 'DELETE'             } };
 }]);
 
 //Configure controller, HomeCtrl
-app.controller('TodosIndexCtrl', ['$scope', 'Todo', function ($scope, Todo){
+app.controller('TodosIndexCtrl', ['$scope', 'Todo', function ($scope, Todo)  {
   $scope.homeTest= "Welcome to homepage!";
   $scope.todos=Todo.query();
   $scope.todo = {};
