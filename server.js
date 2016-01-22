@@ -25,9 +25,9 @@ mongoose.connect('mongodb://localhost/mean_sample');
 
 //II.CRUD routes for resouce
 
-//API routes that will render JSON
+//API routes 
 
-//1. GET all
+//1. GET all...JSON response
 app.get('/api/todos', function (req, res) {
   Todo.find(function (err, allTodos){
     if (err)  {
@@ -38,9 +38,16 @@ app.get('/api/todos', function (req, res) {
   });
 });
 
-//2. POST to todos
+//2. POST to todos...JSON response
 app.post('/api/todos', function (req, res)  {
-
+  var newTodo = new Todo(req.body);
+  newTodo.save(function (err, savedToDo)  {
+    if (err) {
+      res.status(500).json({ error: err.message });    
+    } else  {
+      res.json(savedToDo);
+    }
+  });
 });
 //3. GET single todo by id
 app.get('/api/todos/:id', function (req, res) {

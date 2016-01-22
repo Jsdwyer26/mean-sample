@@ -7,9 +7,6 @@ app.config(['$routeProvider', '$locationProvider',
       .when('/',  {
         templateUrl: 'home.html',
         controller: 'HomeCtrl'
-      })
-      .otherwise({
-          redirectTo: '/'
       });
 
     $locationProvider.html5Mode({
@@ -18,6 +15,7 @@ app.config(['$routeProvider', '$locationProvider',
     });    
   }
 ]);
+
 //Configure controller, HomeCtrl
 app.controller('HomeCtrl', ['$scope', function ($scope){
   $scope.homeTest= "Welcome to homepage!";
