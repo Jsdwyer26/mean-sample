@@ -1,0 +1,26 @@
+<div class= "row">
+  <div class="col-md-6 col-md-offset-3">
+
+
+  <!-- show ALL todos -->
+  <div ng-if="todo.length > 0">
+    <hr>
+      <div class="panel panel-default">
+        <h3 clas="panel-title"> To Do List</h3>
+      </div>
+      <ul class="list-group">
+        <li ng-repeat="todo in todos" class="list-group-item">
+
+        <!-- todo content -->
+        <!-- <div ng-hide="todo.editForm">
+          <div class="pull-right">
+            <a href="#" ng-click="marDone(todo)"><i class="fa fa-check"></i></a>
+            <a href="#" ng-click="todo.editForm = true"><i class="fa fa-pencil"></i></a>
+            <a href="#" ng-click="deleteTodo(todo)"><i class="fa fa-times"></i></a>
+          </div> -->
+      </ul>
+    </div>
+  </div>
+</div>
+
+
