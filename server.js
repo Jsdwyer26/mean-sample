@@ -7,14 +7,11 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     mongoose = require('mongoose');
 
-//Catch-All Route for Angular templating 
-app.get('*', function (req, res) {
-  res.render('index');
-});
-
 
 // configure bodyParser (for receiving form data)
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(bodyParser.json());
 
 // serve static files from public folder
 app.use(express.static(__dirname + '/public'));
@@ -24,6 +21,51 @@ app.set('view engine', 'hbs');
 
 // connect to mongodb
 mongoose.connect('mongodb://localhost/mean_sample');
+
+
+//II.CRUD routes for resouce
+
+//API routes that will render JSON
+
+//1. GET all
+app.get('/api/todos', function (req, res) {
+  Todo.find(function (err, allTodos){
+    if (err)  {
+      res.status(500).json({ error: err.message });
+    } else  {
+      res.json(allTodos);
+    }
+  });
+});
+
+//2. POST to todos
+app.post('/api/todos', function (req, res)  {
+
+});
+//3. GET single todo by id
+app.get('/api/todos/:id', function (req, res) {
+
+});
+//4. PUT update to single todos, get by i.d.
+app.put('/api/todos/:id', function (req, res) {
+
+});
+//5. DELETE a todo by, get by i.d.
+app.delete('/api/todos/:id', function (req, res)  {
+
+});
+
+/*
+* Load 'views/index.hbs' file
+* when any route is requested from the server
+*/
+
+//Catch-All Route for Angular templating 
+app.get('*', function (req, res) {
+  res.render('index');
+});
+
+
 
 // listen on port 3000
 app.listen(3000, function() {
