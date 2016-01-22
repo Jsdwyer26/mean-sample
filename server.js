@@ -7,7 +7,10 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     mongoose = require('mongoose');
 
-
+//Catch-All Route for Angular templating 
+app.get('*', function (req, res) {
+  res.render('index');
+});
 
 
 // configure bodyParser (for receiving form data)
